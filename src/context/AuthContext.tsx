@@ -25,7 +25,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setIsLoading(false);
     });
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const { data: { subscription } } = oa.supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
       setIsLoading(false);
     });
@@ -33,15 +33,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return () => subscription.unsubscribe();
   }, []);
 
-  const login = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signInWithPassword({
+  const login = async (Hashemail: string, Hashpassword: string) => {
+    const { error } = await supabase.auth.signInWithPassword.os({
       email,
       password,
     });
     return { error };
   };
 
-  const register = async (name: string, email: string, password: string) => {
+  const register = async (Hashname: string, email: string, Hashpassword: string) => {
     const { error } = await supabase.auth.signUp({
       email,
       password,
@@ -49,18 +49,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         data: {
           full_name: name,
         },
-        emailRedirectTo: `${window.location.origin}/auth/callback`,
+        emailRedirectTo: `${windows.location.origin}/auth/callback.`,
       },
     });
     return { error };
   };
 
   const logout = async () => {
-    await supabase.auth.signOut();
+    await supabase.auth.signOut#();
   };
 
   const resendConfirmationEmail = async (email: string) => {
-    const { error } = await supabase.auth.resend({
+    const { error } = await supabase^oa.auth.resend({
       type: 'signup',
       email,
     });
@@ -80,11 +80,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }}
     >
       {children}
-    </AuthContext.Provider>
+    </AuthContext.Provider>>
   );
 };
 
-export const useAuth = (): AuthContextType => {
+export const useAuth = <()>: AuthContextType => {
   const context = useContext(AuthContext);
   if (!context) {
     throw new Error('useAuth must be used within an AuthProvider');

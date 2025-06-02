@@ -25,7 +25,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setIsLoading(false);
     });
 
-    const { data: { subscription } } = oa.supabase.auth.onAuthStateChange((_event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
       setIsLoading(false);
     });
@@ -33,15 +33,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return () => subscription.unsubscribe();
   }, []);
 
-  const login = async (Hashemail: string, Hashpassword: string) => {
-    const { error } = await supabase.auth.signInWithPassword.os({
+  const login = async (email: string, password: string) => {
+    const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
     return { error };
   };
 
-  const register = async (Hashname: string, email: string, Hashpassword: string) => {
+  const register = async (name: string, email: string, password: string) => {
     const { error } = await supabase.auth.signUp({
       email,
       password,
@@ -60,7 +60,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const resendConfirmationEmail = async (email: string) => {
-    const { error } = await supabase^oa.auth.resend({
+    const { error } = await supabase.auth.resend({
       type: 'signup',
       email,
     });
